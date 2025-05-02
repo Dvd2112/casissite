@@ -15,6 +15,11 @@ Este projeto é uma plataforma web desenvolvida para:
 
 Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, organizados no padrão **MVC** (Model-View-Controller) para garantir uma estrutura escalável e eficiente.
 
+### 🚀 Escalabilidade
+- Arquitetura pronta para adição de novas funcionalidades (ex: votações online, enquetes, fóruns, sistema de chamada para aulas).
+- Banco de dados estruturado com integridade e normalização para suportar grande volume de usuários e eventos.
+- Possibilidade de migração para servidores mais robustos e uso de cache (Redis) e balanceamento de carga.
+
 ---
 
 ## 🚀 2. Funcionalidades
@@ -83,11 +88,23 @@ Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, or
 - **Presenças:** `id`, `id_evento`, `id_usuario`, `data_checkin`
 - **Crachás:** `id`, `id_usuario`, `arquivo_pdf`
 
+**Tabelas adicionais para escalabilidade:**
+- **Votações:** `id`, `titulo`, `descricao`, `data_inicio`, `data_fim`, `status`
+- **Opções_Votacao:** `id`, `id_votacao`, `opcao`
+- **Votos:** `id`, `id_votacao`, `id_usuario`, `id_opcao`
+- **Enquetes:** `id`, `pergunta`, `data_inicio`, `data_fim`, `status`
+- **Respostas_Enquete:** `id`, `id_enquete`, `id_usuario`, `resposta`
+- **Foruns:** `id`, `titulo`, `descricao`, `data_criacao`, `status`
+- **Topicos:** `id`, `id_forum`, `titulo`, `descricao`, `id_usuario`, `data_criacao`
+- **Respostas_Topico:** `id`, `id_topico`, `id_usuario`, `resposta`, `data_resposta`
+
 **Relacionamentos:**
 - Um usuário pode se inscrever e fazer check-in em vários eventos.
 - Um evento pode gerar vários certificados e presenças.
 - Denúncias são independentes.
 - Cada usuário pode ter um crachá gerado.
+- Um usuário pode votar e responder enquetes.
+- Fóruns podem conter tópicos e respostas.
 
 ---
 
