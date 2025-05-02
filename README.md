@@ -10,6 +10,8 @@ Este projeto é uma plataforma web desenvolvida para:
 - Gerenciamento de eventos 📅
 - Envio de denúncias anônimas 🕵️
 - Emissão de certificados 📄
+- Controle de presença e check-in com QR Code ✅
+- Geração de crachás com fotos 🪪
 
 Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, organizados no padrão **MVC** (Model-View-Controller) para garantir uma estrutura escalável e eficiente.
 
@@ -27,10 +29,20 @@ Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, or
 - Inscrição de usuários nos eventos.
 - Geração automática de **certificados em PDF**.
 
+### ✅ Controle de Presença e Check-in
+- Sistema de **check-in com leitura de QR Code**.
+- Controle de presença para oficinas, palestras e eventos.
+- Relatórios de participantes presentes e ausentes.
+
+### 🪪 Geração de Crachás
+- Cadastro de alunos com upload de fotos.
+- Geração automática de crachás personalizados em PDF.
+- Crachás podem incluir foto, nome, curso e QR Code.
+
 ### 🛠️ Área Administrativa
-- Dashboard para gerenciar eventos e denúncias.
+- Dashboard para gerenciar eventos, denúncias e presenças.
 - Controle de status dos eventos (ativo ou finalizado).
-- Emissão e download de certificados.
+- Emissão e download de certificados e crachás.
 
 ---
 
@@ -41,33 +53,41 @@ Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, or
 - `EventoModel`: Gerencia eventos.
 - `InscricaoModel`: Gerencia inscrições.
 - `CertificadoModel`: Gera certificados.
+- `PresencaModel`: Registra presenças.
+- `CrachaModel`: Gera crachás.
 
 ### 🎨 View
 - Página inicial
 - Página de envio de denúncias
-- Listagem de eventos e inscriçõesA
+- Listagem de eventos e inscrições
+- Página de check-in (leitor de QR Code)
 - Área administrativa
 
 ### 🎯 Controller
 - `DenunciaController`
 - `EventoController`
 - `CertificadoController`
+- `PresencaController`
+- `CrachaController`
 
 ---
 
 ## 🗃️ 4. Estrutura do Banco de Dados
 
 **Tabelas Principais:**
-- **Usuários:** `id`, `nome`, `email`, `senha` (hash), `tipo_usuario`
+- **Usuários:** `id`, `nome`, `email`, `senha` (hash), `tipo_usuario`, `foto`
 - **Denúncias:** `id`, `descricao`, `data_envio`, `status`
 - **Eventos:** `id`, `nome`, `descricao`, `data_inicio`, `data_fim`, `local`, `organizador`, `status`
 - **Inscrições:** `id`, `id_evento`, `id_usuario`, `status`
 - **Certificados:** `id`, `id_evento`, `id_usuario`, `data_emissao`
+- **Presenças:** `id`, `id_evento`, `id_usuario`, `data_checkin`
+- **Crachás:** `id`, `id_usuario`, `arquivo_pdf`
 
 **Relacionamentos:**
-- Um usuário pode se inscrever em vários eventos.
-- Um evento pode gerar vários certificados.
+- Um usuário pode se inscrever e fazer check-in em vários eventos.
+- Um evento pode gerar vários certificados e presenças.
 - Denúncias são independentes.
+- Cada usuário pode ter um crachá gerado.
 
 ---
 
@@ -79,6 +99,7 @@ Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, or
 - **Bootstrap** 🧩 — Design Responsivo
 - **AJAX/jQuery** ⚡ — Interações Dinâmicas
 - **TCPDF/FPDF** 📄 — Geração de PDFs
+- **Instascan.js** 📷 — Leitura de QR Codes no navegador
 
 ---
 
@@ -92,7 +113,17 @@ Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, or
 ### 📅 Eventos
 1. Administrador cria e gerencia eventos.
 2. Usuário se inscreve nos eventos.
-3. Certificados são gerados após finalização do evento.
+3. Usuário faz **check-in** presencial usando QR Code.
+4. Certificados são gerados após finalização do evento.
+
+### ✅ Presença
+- Check-in via QR Code registra a presença automaticamente.
+- Presenças podem ser visualizadas e exportadas na área admin.
+
+### 🪪 Crachás
+- Admin cadastra usuários com fotos.
+- Sistema gera crachás com foto e QR Code.
+- Crachás podem ser impressos ou baixados em PDF.
 
 ### 📄 Certificados
 - Geração automática contendo:
@@ -107,6 +138,7 @@ Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, or
 - **Autenticação:** Login obrigatório para ações importantes.
 - **Senhas:** Criptografadas com `bcrypt`.
 - **Validação:** Frontend + Backend para máxima proteção contra ataques (SQL Injection, XSS, etc).
+- **QR Codes:** Gerados de forma única e criptografada para cada usuário.
 
 ---
 
@@ -123,4 +155,4 @@ Sinta-se à vontade para abrir issues, sugerir melhorias ou enviar pull requests
 
 ---
 
-> Feito com ❤️ pelo CASIS
+> Feito com ❤️ pelo CASIS — Centro Acadêmico de Sistemas de Informação da UTFPR Francisco Beltrão.
