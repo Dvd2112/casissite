@@ -1,115 +1,187 @@
 # Site-CASIS
-# 🎓 Site do Centro Acadêmico CASIS
-
+🎓 **Site do Centro Acadêmico CASIS**  
 Bem-vindo ao repositório oficial do site do Centro Acadêmico de Sistemas de Informação (CASIS) da UTFPR!
-
----
 
 ## 📚 1. Visão Geral do Projeto
 Este projeto é uma plataforma web desenvolvida para:
+
 - Gerenciamento de eventos 📅
 - Envio de denúncias anônimas 🕵️
 - Emissão de certificados 📄
 - Controle de presença e check-in com QR Code ✅
 - Geração de crachás com fotos 🪪
+- Gerenciamento de usuários com permissões e escalabilidade 🚀
 
-Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, organizados no padrão **MVC** (Model-View-Controller) para garantir uma estrutura escalável e eficiente.
+Utilizamos **PHP, HTML, CSS, JavaScript e MySQL/PostgreSQL**, organizados no padrão **MVC (Model-View-Controller)** para garantir uma estrutura escalável e eficiente.
 
-### 🚀 Escalabilidade
-- Arquitetura pronta para adição de novas funcionalidades (ex: votações online, enquetes, fóruns, sistema de chamada para aulas).
-- Banco de dados estruturado com integridade e normalização para suportar grande volume de usuários e eventos.
-- Possibilidade de migração para servidores mais robustos e uso de cache (Redis) e balanceamento de carga.
+🔄 **Totalmente escalável**: Projetado para permitir futuras funcionalidades como:
 
----
+- Gestão de comissões e cargos do CASIS.
+- Histórico completo de participação dos usuários.
+- Emissão de relatórios personalizados para todas as áreas.
+- Controle granular com sistema de permissões por ação.
+- Exportação de dados em formatos CSV/PDF.
 
 ## 🚀 2. Funcionalidades
 
 ### 🕵️‍♂️ Denúncias Anônimas
-- Formulário simples e seguro para denúncias anônimas.
-- Visualização de denúncias para administradores.
-- Atualização do status de denúncias (pendente/resolvida).
+- Formulário simples e seguro.
+- Visualização e gerenciamento por administradores.
+- Alteração de status (pendente/resolvida).
 
 ### 📅 Criação e Gerenciamento de Eventos
-- Cadastro e edição de eventos com título, descrição, data, local e organizador.
-- Inscrição de usuários nos eventos.
-- Geração automática de **certificados em PDF**.
+- Cadastro e edição de eventos com dados completos.
+- Inscrição de usuários.
+- Geração automática de certificados em PDF.
+- Relatórios e exportação.
 
 ### ✅ Controle de Presença e Check-in
-- Sistema de **check-in com leitura de QR Code**.
-- Controle de presença para oficinas, palestras e eventos.
-- Relatórios de participantes presentes e ausentes.
+- Leitura de QR Code.
+- Relatórios de presença (com filtro por evento e status).
+- Exportação para planilhas.
 
 ### 🪪 Geração de Crachás
-- Cadastro de alunos com upload de fotos.
-- Geração automática de crachás personalizados em PDF.
-- Crachás podem incluir foto, nome, curso e QR Code.
+- Cadastro com upload de fotos.
+- Geração automática de crachás em PDF com QR Code.
 
 ### 🛠️ Área Administrativa
-- Dashboard para gerenciar eventos, denúncias e presenças.
-- Controle de status dos eventos (ativo ou finalizado).
+- Dashboard geral.
+- Gestão completa de eventos, denúncias, presenças e usuários.
+- Controle por permissões configuráveis.
 - Emissão e download de certificados e crachás.
 
----
+### 👥 Gerenciamento de Usuários e Permissões
+- Criação de usuários com permissões específicas.
+- Controle granular por ação:
+  - Ex: Permissão para "Criar Evento" e outra para "Emitir Relatório de Evento".
+- Área para usuário editar apenas seus dados pessoais (nome, senha, foto).
 
 ## 🛠️ 3. Estrutura MVC
 
 ### 🗄️ Model
-- `DenunciaModel`: Gerencia denúncias.
-- `EventoModel`: Gerencia eventos.
-- `InscricaoModel`: Gerencia inscrições.
-- `CertificadoModel`: Gera certificados.
-- `PresencaModel`: Registra presenças.
-- `CrachaModel`: Gera crachás.
+- DenunciaModel
+- EventoModel
+- InscricaoModel
+- CertificadoModel
+- PresencaModel
+- CrachaModel
+- UsuarioModel
+- PermissaoModel
+- UsuarioPermissaoModel
 
 ### 🎨 View
 - Página inicial
-- Página de envio de denúncias
-- Listagem de eventos e inscrições
-- Página de check-in (leitor de QR Code)
-- Área administrativa
+- Formulário de denúncias
+- Listagem e inscrição em eventos
+- Página de check-in (QR Code)
+- Área administrativa com gestão de dados
+- Tela do usuário para editar seus dados básicos
 
 ### 🎯 Controller
-- `DenunciaController`
-- `EventoController`
-- `CertificadoController`
-- `PresencaController`
-- `CrachaController`
+- DenunciaController
+- EventoController
+- CertificadoController
+- PresencaController
+- CrachaController
+- UsuarioController
+- PermissaoController
 
----
+## 🗃️ 4. Estrutura Completa do Banco de Dados
 
-## 🗃️ 4. Estrutura do Banco de Dados
+### 📊 Tabelas Principais
 
-**Tabelas Principais:**
-- **Usuários:** `id`, `nome`, `email`, `senha` (hash), `tipo_usuario`, `foto`
-- **Denúncias:** `id`, `descricao`, `data_envio`, `status`
-- **Eventos:** `id`, `nome`, `descricao`, `data_inicio`, `data_fim`, `local`, `organizador`, `status`
-- **Inscrições:** `id`, `id_evento`, `id_usuario`, `status`
-- **Certificados:** `id`, `id_evento`, `id_usuario`, `data_emissao`
-- **Presenças:** `id`, `id_evento`, `id_usuario`, `data_checkin`
-- **Crachás:** `id`, `id_usuario`, `arquivo_pdf`
+| Tabela              | Descrição                                 |
+| ------------------- | ----------------------------------------- |
+| usuarios            | Dados dos usuários do sistema             |
+| denuncias           | Denúncias anônimas enviadas               |
+| eventos             | Eventos cadastrados pelo CASIS            |
+| inscricoes          | Inscrições de usuários em eventos         |
+| certificados        | Certificados emitidos para participantes  |
+| presencas           | Registros de check-in dos eventos         |
+| crachas             | Arquivos PDF dos crachás gerados          |
+| permissoes          | Lista de todas permissões possíveis       |
+| usuario_permissao   | Relacionamento entre usuários e permissões|
 
-**Tabelas adicionais para escalabilidade:**
-- **Votações:** `id`, `titulo`, `descricao`, `data_inicio`, `data_fim`, `status`
-- **Opções_Votacao:** `id`, `id_votacao`, `opcao`
-- **Votos:** `id`, `id_votacao`, `id_usuario`, `id_opcao`
-- **Enquetes:** `id`, `pergunta`, `data_inicio`, `data_fim`, `status`
-- **Respostas_Enquete:** `id`, `id_enquete`, `id_usuario`, `resposta`
-- **Foruns:** `id`, `titulo`, `descricao`, `data_criacao`, `status`
-- **Topicos:** `id`, `id_forum`, `titulo`, `descricao`, `id_usuario`, `data_criacao`
-- **Respostas_Topico:** `id`, `id_topico`, `id_usuario`, `resposta`, `data_resposta`
+### 🗂️ Campos das Principais Tabelas
 
-**Relacionamentos:**
-- Um usuário pode se inscrever e fazer check-in em vários eventos.
-- Um evento pode gerar vários certificados e presenças.
-- Denúncias são independentes.
-- Cada usuário pode ter um crachá gerado.
-- Um usuário pode votar e responder enquetes.
-- Fóruns podem conter tópicos e respostas.
+#### 🧑‍💻 usuarios
+- id
+- nome
+- email
+- senha
+- tipo_usuario
+- foto
+- created_at
+- updated_at
 
----
+#### 📝 denuncias
+- id
+- descricao
+- data_envio
+- status
+- created_at
+- updated_at
+
+#### 📅 eventos
+- id
+- nome
+- descricao
+- data_inicio
+- data_fim
+- local
+- organizador
+- status
+- created_at
+- updated_at
+
+#### 🎫 inscricoes
+- id
+- id_evento
+- id_usuario
+- status
+- created_at
+- updated_at
+
+#### 📄 certificados
+- id
+- id_evento
+- id_usuario
+- data_emissao
+- created_at
+- updated_at
+
+#### ✅ presencas
+- id
+- id_evento
+- id_usuario
+- data_checkin
+- created_at
+- updated_at
+
+#### 🪪 crachas
+- id
+- id_usuario
+- arquivo_pdf
+- created_at
+- updated_at
+
+#### 🛡️ permissoes
+- id
+- nome
+- tipo (Ex: 'ação' ou 'relatório')
+- descricao
+- created_at
+- updated_at
+
+#### 🔗 usuario_permissao
+- id
+- id_usuario
+- id_permissao
+- valor (booleano: 1 ou 0)
+- created_at
+- updated_at
 
 ## ⚙️ 5. Tecnologias Utilizadas
-
 - **PHP** 🐘 — Backend
 - **MySQL/PostgreSQL** 🛢️ — Banco de dados
 - **HTML/CSS/JavaScript** 🎨 — Frontend
@@ -118,58 +190,50 @@ Utilizamos **PHP**, **HTML**, **CSS**, **JavaScript** e **MySQL/PostgreSQL**, or
 - **TCPDF/FPDF** 📄 — Geração de PDFs
 - **Instascan.js** 📷 — Leitura de QR Codes no navegador
 
----
-
 ## 🔄 6. Fluxo de Trabalho
 
 ### 📬 Denúncias
-1. Usuário preenche e envia o formulário de denúncia.
-2. Denúncia salva como "pendente".
-3. Administrador visualiza e altera o status conforme resolvido.
+- Usuário envia denúncia anônima.
+- Admin altera status (pendente/resolvida).
 
 ### 📅 Eventos
-1. Administrador cria e gerencia eventos.
-2. Usuário se inscreve nos eventos.
-3. Usuário faz **check-in** presencial usando QR Code.
-4. Certificados são gerados após finalização do evento.
+- Admin cria evento.
+- Usuário se inscreve.
+- Usuário faz check-in com QR Code.
+- Certificados gerados automaticamente.
 
 ### ✅ Presença
-- Check-in via QR Code registra a presença automaticamente.
-- Presenças podem ser visualizadas e exportadas na área admin.
+- Check-in registra presença.
+- Relatórios exportáveis.
 
 ### 🪪 Crachás
-- Admin cadastra usuários com fotos.
-- Sistema gera crachás com foto e QR Code.
-- Crachás podem ser impressos ou baixados em PDF.
+- Cadastro com foto.
+- Geração de crachá com QR Code.
 
 ### 📄 Certificados
-- Geração automática contendo:
-  - Nome do participante
-  - Nome do evento
-  - Datas e assinatura digital (opcional)
+- Geração automática com nome, evento, datas e assinatura.
 
----
+### 🔐 Usuários e Permissões
+- Admin cria usuários com permissões específicas.
+- Usuário comum pode editar apenas seus dados pessoais.
+- Sistema escalável para controlar cada ação do sistema via permissões.
 
 ## 🔒 7. Segurança
+- **Autenticação**: Login seguro.
+- **Senhas**: Criptografadas com bcrypt.
+- **Validações**: Proteção contra SQL Injection e XSS.
+- **QR Codes**: Únicos e criptografados.
 
-- **Autenticação:** Login obrigatório para ações importantes.
-- **Senhas:** Criptografadas com `bcrypt`.
-- **Validação:** Frontend + Backend para máxima proteção contra ataques (SQL Injection, XSS, etc).
-- **QR Codes:** Gerados de forma única e criptografada para cada usuário.
+## 🌐 8. Escalabilidade e Futuro
+Estrutura preparada para crescer:
 
----
-
-## 🌐 8. Hospedagem e Deploy
-
-- **Hospedagem:** Plataformas compatíveis com PHP e MySQL (ex: Hostinger, DigitalOcean).
-- **Versionamento:** Git + GitHub 🚀
-- **Deploy:** Automatizado com FTP/SFTP ou plataformas como Heroku.
-
----
+- Adicionar módulos como votações, atas, biblioteca de arquivos 📚
+- Gerar relatórios avançados em PDF e CSV 📊
+- Sistema multiusuário com controle de cargos e permissões granular 🛡️
+- Histórico completo de participação dos membros
+- Possibilidade de integração com sistemas da UTFPR
 
 ## 📌 Contribuindo
 Sinta-se à vontade para abrir issues, sugerir melhorias ou enviar pull requests! 💬
 
----
-
-> Feito com ❤️ pelo CASIS — Centro Acadêmico de Sistemas de Informação da UTFPR Francisco Beltrão.
+Feito com ❤️ pelo **CASIS — Centro Acadêmico de Sistemas de Informação da UTFPR Francisco Beltrão.**
